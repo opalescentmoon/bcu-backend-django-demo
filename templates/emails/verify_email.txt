@@ -1,0 +1,9 @@
+{% autoescape off %}Halo {{ user.username }},
+
+Terima kasih telah mendaftar di {{ app_name }}.
+Klik tautan berikut untuk memverifikasi email Anda (berlaku 24 jam):
+
+{{ link }}
+
+Abaikan email ini jika Anda tidak merasa mendaftar.
+{% endautoescape %}

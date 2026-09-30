@@ -1,0 +1,11 @@
+{% autoescape off %}Halo {{ order.user.username }},
+
+Pembayaran pesanan {{ order.order_number }} sebesar Rp{{ order.total_amount|floatformat:"0g" }} telah kami terima.
+{% if order.order_type == "image" %}
+File Anda siap diunduh di halaman Unduhan Saya:
+{{ frontend_url }}/akun/unduhan
+{% else %}
+Pesanan sedang diteruskan ke toko. Pantau statusnya di:
+{{ frontend_url }}/akun/pesanan/{{ order.order_number }}
+{% endif %}
+{% endautoescape %}

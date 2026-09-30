@@ -1,0 +1,7 @@
+{% autoescape off %}Halo {{ vendor_order.order.user.username }},
+
+Pesanan {{ vendor_order.order.order_number }} dari toko {{ vendor_order.vendor.store_name }} sekarang berstatus: {{ vendor_order.get_status_display }}.
+{% if vendor_order.cancel_reason %}Alasan: {{ vendor_order.cancel_reason }}
+{% endif %}
+{{ frontend_url }}/akun/pesanan/{{ vendor_order.order.order_number }}
+{% endautoescape %}

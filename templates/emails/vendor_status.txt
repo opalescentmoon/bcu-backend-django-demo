@@ -1,0 +1,11 @@
+{% autoescape off %}Halo {{ vendor.user.username }},
+
+Status toko "{{ vendor.store_name }}" sekarang: {{ vendor.get_status_display }}.
+{% if vendor.status == "rejected" and vendor.rejection_reason %}
+Alasan: {{ vendor.rejection_reason }}
+Silakan perbaiki profil toko Anda lalu ajukan kembali.
+{% elif vendor.status == "approved" %}
+Anda sekarang dapat menambahkan produk melalui Dashboard Vendor:
+{{ frontend_url }}/vendor/dashboard
+{% endif %}
+{% endautoescape %}

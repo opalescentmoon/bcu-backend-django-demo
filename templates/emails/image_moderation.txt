@@ -1,0 +1,7 @@
+{% autoescape off %}Halo {{ image.vendor.user.username }},
+
+Gambar "{{ image.title }}" {% if image.status == "published" %}telah diterbitkan dan tampil di galeri.{% else %}ditolak.
+Alasan: {{ image.rejection_reason }}{% endif %}
+
+{{ frontend_url }}/vendor/gambar
+{% endautoescape %}

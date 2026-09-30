@@ -1,0 +1,5 @@
+{% autoescape off %}Halo {{ vendor_order.vendor.store_name }},
+
+Ada pesanan baru ({{ vendor_order.order.order_number }}) senilai Rp{{ vendor_order.subtotal|floatformat:"0g" }}.
+{{ frontend_url }}/vendor/pesanan/{{ vendor_order.pk }}
+{% endautoescape %}

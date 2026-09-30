@@ -1,0 +1,3549 @@
+openapi: 3.0.3
+info:
+  title: Food & Image Marketplace API
+  version: 1.0.0
+  description: REST API marketplace makanan & aset gambar (demo). Lihat folder docs/.
+paths:
+  /api/addresses/:
+    get:
+      operationId: addresses_list
+      tags:
+      - alamat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Address'
+          description: ''
+    post:
+      operationId: addresses_create
+      tags:
+      - alamat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddressRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddressRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+  /api/addresses/{id}/:
+    get:
+      operationId: addresses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this alamat.
+        required: true
+      tags:
+      - alamat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    patch:
+      operationId: addresses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this alamat.
+        required: true
+      tags:
+      - alamat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAddressRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAddressRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAddressRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    delete:
+      operationId: addresses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this alamat.
+        required: true
+      tags:
+      - alamat
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/addresses/{id}/set-default/:
+    post:
+      operationId: addresses_set_default_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this alamat.
+        required: true
+      tags:
+      - alamat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+  /api/auth/change-password/:
+    post:
+      operationId: auth_change_password_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPair'
+          description: ''
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '205':
+          description: No response body
+  /api/auth/password-reset/:
+    post:
+      operationId: auth_password_reset_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/auth/password-reset/confirm/:
+    post:
+      operationId: auth_password_reset_confirm_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirmRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirmRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirmRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/auth/profile/:
+    get:
+      operationId: auth_profile_retrieve
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: auth_profile_partial_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPair'
+          description: ''
+  /api/auth/resend-verification/:
+    post:
+      operationId: auth_resend_verification_create
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refresh'
+          description: ''
+  /api/auth/verify-email/:
+    post:
+      operationId: auth_verify_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/cart/:
+    get:
+      operationId: cart_retrieve
+      tags:
+      - keranjang
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+    delete:
+      operationId: cart_destroy
+      tags:
+      - keranjang
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/cart/items/:
+    post:
+      operationId: cart_items_create
+      tags:
+      - keranjang
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItemCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItemCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItemCreateRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/cart/items/{id}/:
+    patch:
+      operationId: cart_items_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - keranjang
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemUpdateRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+    delete:
+      operationId: cart_items_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - keranjang
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/categories/:
+    get:
+      operationId: categories_list
+      parameters:
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - food
+          - image
+      tags:
+      - katalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+  /api/downloads/:
+    get:
+      operationId: downloads_list
+      description: GET /api/downloads/ — aset gambar yang sudah dibeli.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - gambar
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImagePurchaseList'
+          description: ''
+  /api/foods/:
+    get:
+      operationId: foods_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+      - in: query
+        name: city
+        schema:
+          type: string
+      - in: query
+        name: max_price
+        schema:
+          type: number
+      - in: query
+        name: min_price
+        schema:
+          type: number
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+      - in: query
+        name: vendor
+        schema:
+          type: string
+      tags:
+      - makanan
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFoodListList'
+          description: ''
+    post:
+      operationId: foods_create
+      tags:
+      - makanan
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FoodWriteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FoodWriteRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoodWriteRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodWrite'
+          description: ''
+  /api/foods/{id}/:
+    get:
+      operationId: foods_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this produk makanan.
+        required: true
+      tags:
+      - makanan
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodDetail'
+          description: ''
+    patch:
+      operationId: foods_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this produk makanan.
+        required: true
+      tags:
+      - makanan
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodWriteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodWriteRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodWriteRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodWrite'
+          description: ''
+    delete:
+      operationId: foods_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this produk makanan.
+        required: true
+      tags:
+      - makanan
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/foods/{id}/variants/:
+    post:
+      operationId: foods_variants_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this produk makanan.
+        required: true
+      tags:
+      - makanan
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FoodVariantRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FoodVariantRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoodVariantRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodDetail'
+          description: ''
+  /api/foods/{id}/variants/{variant_id}/:
+    patch:
+      operationId: foods_variants_partial_update
+      description: PATCH/DELETE /api/foods/{id}/variants/{variant_id}/
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: variant_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - makanan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodVariantRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodVariantRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFoodVariantRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodVariant'
+          description: ''
+    delete:
+      operationId: foods_variants_destroy
+      description: PATCH/DELETE /api/foods/{id}/variants/{variant_id}/
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: variant_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - makanan
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/health/:
+    get:
+      operationId: health_retrieve
+      tags:
+      - utilitas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/images/:
+    get:
+      operationId: images_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+      - in: query
+        name: license
+        schema:
+          type: string
+          enum:
+          - commercial
+          - personal
+        description: |-
+          * `personal` - Personal
+          * `commercial` - Komersial
+      - in: query
+        name: max_price
+        schema:
+          type: number
+      - in: query
+        name: min_price
+        schema:
+          type: number
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: orientation
+        schema:
+          type: string
+          enum:
+          - landscape
+          - portrait
+          - square
+        description: |-
+          * `landscape` - Landscape
+          * `portrait` - Portrait
+          * `square` - Square
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+      - in: query
+        name: vendor
+        schema:
+          type: string
+      tags:
+      - gambar
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImageListList'
+          description: ''
+    post:
+      operationId: images_create
+      tags:
+      - gambar
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImageWriteRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwnerImage'
+          description: ''
+  /api/images/{id}/:
+    get:
+      operationId: images_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this aset gambar.
+        required: true
+      tags:
+      - gambar
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageDetail'
+          description: ''
+    patch:
+      operationId: images_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this aset gambar.
+        required: true
+      tags:
+      - gambar
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedImageWriteRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwnerImage'
+          description: ''
+    delete:
+      operationId: images_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this aset gambar.
+        required: true
+      tags:
+      - gambar
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/images/{id}/download/:
+    get:
+      operationId: images_download_retrieve
+      description: Link unduhan sementara file original (hanya pembeli).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this aset gambar.
+        required: true
+      - in: query
+        name: license
+        schema:
+          type: string
+          enum:
+          - commercial
+          - personal
+      tags:
+      - gambar
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadLink'
+          description: ''
+  /api/orders/{order_number}/:
+    get:
+      operationId: orders_retrieve
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - pesanan
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetail'
+          description: ''
+  /api/orders/{order_number}/cancel/:
+    post:
+      operationId: orders_cancel_create
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - pesanan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetail'
+          description: ''
+  /api/orders/{order_number}/pay/:
+    post:
+      operationId: orders_pay_create
+      description: Buat ulang sesi pembayaran untuk order pending.
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - pesanan
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/orders/{order_number}/vendor-orders/{id}/confirm-received/:
+    post:
+      operationId: orders_vendor_orders_confirm_received_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - pesanan
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetail'
+          description: ''
+  /api/orders/checkout/:
+    post:
+      operationId: orders_checkout_create
+      tags:
+      - pesanan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/orders/history/:
+    get:
+      operationId: orders_history_list
+      parameters:
+      - in: query
+        name: order_type
+        schema:
+          type: string
+          enum:
+          - food
+          - image
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - cancelled
+          - completed
+          - expired
+          - paid
+          - pending
+      tags:
+      - pesanan
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOrderListList'
+          description: ''
+  /api/payments/midtrans/notification/:
+    post:
+      operationId: payments_midtrans_notification_create
+      description: Webhook Midtrans. Diverifikasi dengan signature_key, bukan JWT.
+      tags:
+      - pembayaran
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: {}
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/payments/simulate/{order_number}/:
+    post:
+      operationId: payments_simulate_create
+      description: Hanya aktif bila PAYMENT_PROVIDER=simulation (docs/05 §4.3).
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - pembayaran
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulatePaymentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SimulatePaymentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SimulatePaymentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetail'
+          description: ''
+  /api/vendor/dashboard/:
+    get:
+      operationId: vendor_dashboard_retrieve
+      parameters:
+      - in: query
+        name: period
+        schema:
+          type: string
+          enum:
+          - 12m
+          - 30d
+          - 7d
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/vendor/foods/:
+    get:
+      operationId: vendor_foods_list
+      description: GET /api/vendor/foods/ — semua produk milik vendor (termasuk yang
+        tidak tersedia).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFoodDetailList'
+          description: ''
+  /api/vendor/images/:
+    get:
+      operationId: vendor_images_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOwnerImageList'
+          description: ''
+  /api/vendor/orders/:
+    get:
+      operationId: vendor_orders_list
+      parameters:
+      - in: query
+        name: order_type
+        schema:
+          type: string
+          enum:
+          - food
+          - image
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: 'Satu atau lebih, dipisah koma: new,processing'
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVendorOrderList'
+          description: ''
+  /api/vendor/orders/{id}/:
+    get:
+      operationId: vendor_orders_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorOrder'
+          description: ''
+  /api/vendor/orders/{id}/status/:
+    post:
+      operationId: vendor_orders_status_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - vendor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorOrderStatusRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VendorOrderStatusRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VendorOrderStatusRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorOrder'
+          description: ''
+  /api/vendor/profile/:
+    get:
+      operationId: vendor_profile_retrieve
+      description: GET/POST/PATCH /api/vendor/profile/ — profil toko milik vendor
+        yang login.
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorProfile'
+          description: ''
+    post:
+      operationId: vendor_profile_create
+      description: GET/POST/PATCH /api/vendor/profile/ — profil toko milik vendor
+        yang login.
+      tags:
+      - vendor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VendorProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VendorProfileRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorProfile'
+          description: ''
+    patch:
+      operationId: vendor_profile_partial_update
+      description: GET/POST/PATCH /api/vendor/profile/ — profil toko milik vendor
+        yang login.
+      tags:
+      - vendor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVendorProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVendorProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVendorProfileRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorProfile'
+          description: ''
+  /api/vendors/{slug}/:
+    get:
+      operationId: vendors_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - vendor
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicVendor'
+          description: ''
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        label:
+          type: string
+          maxLength: 50
+        recipient_name:
+          type: string
+          title: Nama penerima
+          maxLength: 120
+        phone:
+          type: string
+          maxLength: 20
+        street:
+          type: string
+          title: Alamat
+        city:
+          type: string
+          title: Kota
+          maxLength: 100
+        province:
+          type: string
+          title: Provinsi
+          maxLength: 100
+        postal_code:
+          type: string
+          title: Kode pos
+          maxLength: 10
+        notes:
+          type: string
+          title: Catatan
+          maxLength: 255
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        is_default:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - city
+      - created_at
+      - id
+      - label
+      - phone
+      - postal_code
+      - province
+      - recipient_name
+      - street
+    AddressRequest:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 50
+        recipient_name:
+          type: string
+          minLength: 1
+          title: Nama penerima
+          maxLength: 120
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 20
+        street:
+          type: string
+          minLength: 1
+          title: Alamat
+        city:
+          type: string
+          minLength: 1
+          title: Kota
+          maxLength: 100
+        province:
+          type: string
+          minLength: 1
+          title: Provinsi
+          maxLength: 100
+        postal_code:
+          type: string
+          minLength: 1
+          title: Kode pos
+          maxLength: 10
+        notes:
+          type: string
+          title: Catatan
+          maxLength: 255
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        is_default:
+          type: boolean
+      required:
+      - city
+      - label
+      - phone
+      - postal_code
+      - province
+      - recipient_name
+      - street
+    CancelRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          default: ''
+          maxLength: 255
+    CartItemCreateRequest:
+      type: object
+      properties:
+        item_type:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        food_variant_id:
+          type: integer
+        image_license_id:
+          type: integer
+        quantity:
+          type: integer
+          maximum: 99
+          minimum: 1
+          default: 1
+      required:
+      - item_type
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        name:
+          type: string
+          title: Nama
+          maxLength: 80
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[-a-zA-Z0-9_]+$
+        icon:
+          type: string
+          maxLength: 50
+      required:
+      - id
+      - name
+      - slug
+      - type
+    CategoryBrief:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Nama
+          maxLength: 80
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - id
+      - name
+      - slug
+    ChangePasswordRequest:
+      type: object
+      properties:
+        old_password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        new_password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - new_password
+      - old_password
+    CheckoutRequest:
+      type: object
+      properties:
+        order_type:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        address_id:
+          type: integer
+        notes:
+          type: string
+          default: ''
+          maxLength: 255
+      required:
+      - order_type
+    DownloadLink:
+      type: object
+      properties:
+        download_url:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        filename:
+          type: string
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
+      required:
+      - download_url
+      - expires_at
+      - filename
+      - license_type
+    FoodDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+        slug:
+          type: string
+          maxLength: 170
+          pattern: ^[-a-zA-Z0-9_]+$
+        image_url:
+          type: string
+          nullable: true
+          readOnly: true
+        min_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_available:
+          type: boolean
+          title: Tersedia
+        in_stock:
+          type: boolean
+          readOnly: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryBrief'
+          readOnly: true
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorInFoodDetail'
+          readOnly: true
+        description:
+          type: string
+          title: Deskripsi
+        variants:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - created_at
+      - id
+      - image_url
+      - in_stock
+      - slug
+      - title
+      - updated_at
+      - variants
+      - vendor
+    FoodList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+        slug:
+          type: string
+          maxLength: 170
+          pattern: ^[-a-zA-Z0-9_]+$
+        image_url:
+          type: string
+          nullable: true
+          readOnly: true
+        min_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_available:
+          type: boolean
+          title: Tersedia
+        in_stock:
+          type: boolean
+          readOnly: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryBrief'
+          readOnly: true
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorInFood'
+          readOnly: true
+      required:
+      - category
+      - id
+      - image_url
+      - in_stock
+      - slug
+      - title
+      - vendor
+    FoodVariant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Nama varian
+          maxLength: 60
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        stock:
+          type: integer
+          minimum: 0
+        is_active:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+      required:
+      - id
+      - name
+      - price
+      - stock
+    FoodVariantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nama varian
+          maxLength: 60
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        stock:
+          type: integer
+          minimum: 0
+        is_active:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+      required:
+      - name
+      - price
+      - stock
+    FoodWrite:
+      type: object
+      properties:
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+          minLength: 3
+        description:
+          type: string
+          title: Deskripsi
+        category_id:
+          type: integer
+        image:
+          type: string
+          format: uri
+        is_available:
+          type: boolean
+          title: Tersedia
+      required:
+      - category_id
+      - image
+      - title
+    FoodWriteRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          title: Judul
+          maxLength: 150
+        description:
+          type: string
+          title: Deskripsi
+        category_id:
+          type: integer
+        image:
+          type: string
+          format: binary
+        is_available:
+          type: boolean
+          title: Tersedia
+        variants:
+          writeOnly: true
+          description: 'JSON: [{"name","price","stock"}]'
+      required:
+      - category_id
+      - image
+      - title
+    ImageDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+        slug:
+          type: string
+          maxLength: 170
+          pattern: ^[-a-zA-Z0-9_]+$
+        thumbnail_url:
+          type: string
+          nullable: true
+          readOnly: true
+        min_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        width:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        height:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        orientation:
+          type: string
+          readOnly: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryBrief'
+          readOnly: true
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorInImage'
+          readOnly: true
+        description:
+          type: string
+          title: Deskripsi
+        tags:
+          type: array
+          items:
+            type: string
+            maxLength: 50
+        preview_url:
+          type: string
+          nullable: true
+          readOnly: true
+        file_format:
+          type: string
+          maxLength: 10
+        file_size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        licenses:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        purchased_licenses:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - created_at
+      - file_format
+      - file_size
+      - height
+      - id
+      - licenses
+      - orientation
+      - preview_url
+      - purchased_licenses
+      - slug
+      - thumbnail_url
+      - title
+      - vendor
+      - width
+    ImageList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+        slug:
+          type: string
+          maxLength: 170
+          pattern: ^[-a-zA-Z0-9_]+$
+        thumbnail_url:
+          type: string
+          nullable: true
+          readOnly: true
+        min_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        width:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        height:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        orientation:
+          type: string
+          readOnly: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryBrief'
+          readOnly: true
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorInImage'
+          readOnly: true
+      required:
+      - category
+      - height
+      - id
+      - orientation
+      - slug
+      - thumbnail_url
+      - title
+      - vendor
+      - width
+    ImagePurchase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
+        order_number:
+          type: string
+        purchased_at:
+          type: string
+          format: date-time
+          readOnly: true
+        download_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        last_downloaded_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - id
+      - image
+      - license_type
+      - order_number
+      - purchased_at
+    ImageWriteRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 150
+        description:
+          type: string
+        category_id:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+        file:
+          type: string
+          format: binary
+          description: JPG/PNG/WebP, maks 25 MB, sisi terpendek ≥ 1000 px
+        licenses:
+          description: 'JSON: [{"license_type":"personal","price":"50000"}]'
+      required:
+      - category_id
+      - file
+      - licenses
+      - title
+    LicenseTypeEnum:
+      enum:
+      - personal
+      - commercial
+      type: string
+      description: |-
+        * `personal` - Personal
+        * `commercial` - Komersial
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - email
+      - password
+    OrderDetail:
+      type: object
+      properties:
+        order_number:
+          type: string
+          maxLength: 30
+        order_type:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        status:
+          $ref: '#/components/schemas/Status5a0Enum'
+        refund_status:
+          $ref: '#/components/schemas/RefundStatusEnum'
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        delivery_fee_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        payment_method:
+          type: string
+          maxLength: 30
+        shipping:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          readOnly: true
+        notes:
+          type: string
+          maxLength: 255
+        cancel_reason:
+          type: string
+          maxLength: 255
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        paid_at:
+          type: string
+          format: date-time
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        cancelled_at:
+          type: string
+          format: date-time
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+        can_cancel:
+          type: boolean
+          readOnly: true
+        can_pay:
+          type: boolean
+          readOnly: true
+        payment:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          readOnly: true
+        vendor_orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderInOrder'
+          readOnly: true
+      required:
+      - can_cancel
+      - can_pay
+      - created_at
+      - expires_at
+      - order_number
+      - order_type
+      - payment
+      - shipping
+      - subtotal
+      - total_amount
+      - vendor_orders
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_type:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        product_id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+        variant:
+          type: string
+        license_type:
+          type: string
+          maxLength: 12
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        line_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        image_url:
+          type: string
+          nullable: true
+          readOnly: true
+      required:
+      - id
+      - image_url
+      - line_total
+      - product_id
+      - product_type
+      - title
+      - unit_price
+      - variant
+    OrderList:
+      type: object
+      properties:
+        order_number:
+          type: string
+          maxLength: 30
+        order_type:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        status:
+          $ref: '#/components/schemas/Status5a0Enum'
+        refund_status:
+          $ref: '#/components/schemas/RefundStatusEnum'
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        item_count:
+          type: integer
+          readOnly: true
+        thumbnail_url:
+          type: string
+          nullable: true
+          readOnly: true
+        vendor_orders:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expires_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - expires_at
+      - item_count
+      - order_number
+      - order_type
+      - thumbnail_url
+      - total_amount
+      - vendor_orders
+    OwnerImage:
+      type: object
+      description: 'Tampilan vendor pemilik: termasuk status moderasi.'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Judul
+          maxLength: 150
+        slug:
+          type: string
+          maxLength: 170
+          pattern: ^[-a-zA-Z0-9_]+$
+        thumbnail_url:
+          type: string
+          nullable: true
+          readOnly: true
+        min_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        width:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        height:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        orientation:
+          type: string
+          readOnly: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryBrief'
+          readOnly: true
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorInImage'
+          readOnly: true
+        description:
+          type: string
+          title: Deskripsi
+        tags:
+          type: array
+          items:
+            type: string
+            maxLength: 50
+        preview_url:
+          type: string
+          nullable: true
+          readOnly: true
+        file_format:
+          type: string
+          maxLength: 10
+        file_size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        licenses:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        purchased_licenses:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/OwnerImageStatusEnum'
+        rejection_reason:
+          type: string
+          title: Alasan penolakan
+        is_deleted:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - created_at
+      - file_format
+      - file_size
+      - height
+      - id
+      - licenses
+      - orientation
+      - preview_url
+      - purchased_licenses
+      - slug
+      - thumbnail_url
+      - title
+      - updated_at
+      - vendor
+      - width
+    OwnerImageStatusEnum:
+      enum:
+      - pending_review
+      - published
+      - rejected
+      type: string
+      description: |-
+        * `pending_review` - Menunggu Review
+        * `published` - Terbit
+        * `rejected` - Ditolak
+    PaginatedFoodDetailList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoodDetail'
+    PaginatedFoodListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoodList'
+    PaginatedImageListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageList'
+    PaginatedImagePurchaseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImagePurchase'
+    PaginatedOrderListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderList'
+    PaginatedOwnerImageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OwnerImage'
+    PaginatedVendorOrderList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrder'
+    PasswordResetConfirmRequest:
+      type: object
+      properties:
+        uid:
+          type: string
+          minLength: 1
+        token:
+          type: string
+          minLength: 1
+        new_password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - new_password
+      - token
+      - uid
+    PasswordResetRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+      required:
+      - email
+    PatchedAddressRequest:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 50
+        recipient_name:
+          type: string
+          minLength: 1
+          title: Nama penerima
+          maxLength: 120
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 20
+        street:
+          type: string
+          minLength: 1
+          title: Alamat
+        city:
+          type: string
+          minLength: 1
+          title: Kota
+          maxLength: 100
+        province:
+          type: string
+          minLength: 1
+          title: Provinsi
+          maxLength: 100
+        postal_code:
+          type: string
+          minLength: 1
+          title: Kode pos
+          maxLength: 10
+        notes:
+          type: string
+          title: Catatan
+          maxLength: 255
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        is_default:
+          type: boolean
+    PatchedCartItemUpdateRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          maximum: 99
+          minimum: 1
+    PatchedFoodVariantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nama varian
+          maxLength: 60
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        stock:
+          type: integer
+          minimum: 0
+        is_active:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+    PatchedFoodWriteRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          title: Judul
+          maxLength: 150
+        description:
+          type: string
+          title: Deskripsi
+        category_id:
+          type: integer
+        image:
+          type: string
+          format: binary
+        is_available:
+          type: boolean
+          title: Tersedia
+        variants:
+          writeOnly: true
+          description: 'JSON: [{"name","price","stock"}]'
+    PatchedImageWriteRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 150
+        description:
+          type: string
+        category_id:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+        file:
+          type: string
+          format: binary
+          description: JPG/PNG/WebP, maks 25 MB, sisi terpendek ≥ 1000 px
+        licenses:
+          description: 'JSON: [{"license_type":"personal","price":"50000"}]'
+    PatchedUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          title: Nama pengguna
+          description: Wajib. 150 karakter atau sedikit. Hanya huruf, angka, dan @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        first_name:
+          type: string
+          title: Nama depan
+          maxLength: 150
+        last_name:
+          type: string
+          title: Nama belakang
+          maxLength: 150
+        phone:
+          type: string
+          title: No. HP
+          maxLength: 20
+    PatchedVendorProfileRequest:
+      type: object
+      properties:
+        store_name:
+          type: string
+          minLength: 1
+          title: Nama toko
+          maxLength: 120
+        description:
+          type: string
+          title: Deskripsi
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 20
+        address:
+          type: string
+          minLength: 1
+          title: Alamat toko
+        city:
+          type: string
+          minLength: 1
+          title: Kota
+          maxLength: 100
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        logo:
+          type: string
+          format: binary
+          writeOnly: true
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Ongkir tetap
+        is_open:
+          type: boolean
+          title: Toko buka
+    Payment:
+      type: object
+      properties:
+        provider:
+          type: string
+          maxLength: 12
+        provider_order_id:
+          type: string
+          maxLength: 50
+        status:
+          $ref: '#/components/schemas/PaymentStatusEnum'
+        snap_token:
+          type: string
+          maxLength: 64
+        redirect_url:
+          type: string
+          maxLength: 255
+        client_key:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - client_key
+      - created_at
+      - provider
+      - provider_order_id
+    PaymentStatusEnum:
+      enum:
+      - pending
+      - settlement
+      - expire
+      - cancel
+      - deny
+      - failure
+      type: string
+      description: |-
+        * `pending` - Pending
+        * `settlement` - Lunas
+        * `expire` - Kedaluwarsa
+        * `cancel` - Dibatalkan
+        * `deny` - Ditolak
+        * `failure` - Gagal
+    PayoutStatusEnum:
+      enum:
+      - unpaid
+      - paid
+      type: string
+      description: |-
+        * `unpaid` - Belum dicairkan
+        * `paid` - Sudah dicairkan
+    ProductTypeEnum:
+      enum:
+      - food
+      - image
+      type: string
+      description: |-
+        * `food` - Makanan
+        * `image` - Aset Gambar
+    PublicVendor:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+          title: Deskripsi
+        logo_url:
+          type: string
+          nullable: true
+          readOnly: true
+        city:
+          type: string
+          title: Kota
+          maxLength: 100
+        is_open:
+          type: boolean
+          title: Toko buka
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Ongkir tetap
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+        food_count:
+          type: integer
+          readOnly: true
+        image_count:
+          type: integer
+          readOnly: true
+      required:
+      - city
+      - food_count
+      - image_count
+      - logo_url
+      - slug
+      - store_name
+    Refresh:
+      type: object
+      properties:
+        refresh:
+          type: string
+      required:
+      - refresh
+    RefreshRequest:
+      type: object
+      properties:
+        refresh:
+          type: string
+          minLength: 1
+      required:
+      - refresh
+    RefundStatusEnum:
+      enum:
+      - none
+      - pending
+      - refunded
+      type: string
+      description: |-
+        * `none` - Tidak ada
+        * `pending` - Menunggu refund
+        * `refunded` - Sudah direfund
+    RegisterRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        password_confirm:
+          type: string
+          writeOnly: true
+          minLength: 1
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RegisterRoleEnum'
+          default: customer
+      required:
+      - email
+      - password
+      - password_confirm
+      - username
+    RegisterRoleEnum:
+      enum:
+      - customer
+      - vendor
+      type: string
+      description: |-
+        * `customer` - customer
+        * `vendor` - vendor
+    ResultEnum:
+      enum:
+      - success
+      - failure
+      - expire
+      type: string
+      description: |-
+        * `success` - success
+        * `failure` - failure
+        * `expire` - expire
+    SimulatePaymentRequest:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/ResultEnum'
+      required:
+      - result
+    Status5a0Enum:
+      enum:
+      - pending
+      - paid
+      - completed
+      - cancelled
+      - expired
+      type: string
+      description: |-
+        * `pending` - Menunggu Pembayaran
+        * `paid` - Dibayar
+        * `completed` - Selesai
+        * `cancelled` - Dibatalkan
+        * `expired` - Kedaluwarsa
+    Status8a2Enum:
+      enum:
+      - awaiting_payment
+      - new
+      - processing
+      - shipped
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `awaiting_payment` - Menunggu Pembayaran
+        * `new` - Pesanan Baru
+        * `processing` - Diproses
+        * `shipped` - Dikirim
+        * `completed` - Selesai
+        * `cancelled` - Dibatalkan
+    StatusD08Enum:
+      enum:
+      - pending
+      - approved
+      - rejected
+      - suspended
+      type: string
+      description: |-
+        * `pending` - Menunggu
+        * `approved` - Disetujui
+        * `rejected` - Ditolak
+        * `suspended` - Ditangguhkan
+    TokenPair:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - access
+      - refresh
+      - user
+    TokenRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          minLength: 1
+      required:
+      - token
+    TypeEnum:
+      enum:
+      - food
+      - image
+      type: string
+      description: |-
+        * `food` - Makanan
+        * `image` - Gambar
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Nama pengguna
+          description: Wajib. 150 karakter atau sedikit. Hanya huruf, angka, dan @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          title: Nama depan
+          maxLength: 150
+        last_name:
+          type: string
+          title: Nama belakang
+          maxLength: 150
+        phone:
+          type: string
+          title: No. HP
+          maxLength: 20
+        role:
+          allOf:
+          - $ref: '#/components/schemas/UserRoleEnum'
+          readOnly: true
+        is_email_verified:
+          type: boolean
+          readOnly: true
+          title: Email terverifikasi
+        vendor:
+          allOf:
+          - $ref: '#/components/schemas/VendorBrief'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - id
+      - is_email_verified
+      - role
+      - username
+      - vendor
+    UserRoleEnum:
+      enum:
+      - customer
+      - vendor
+      - admin
+      type: string
+      description: |-
+        * `customer` - Customer
+        * `vendor` - Vendor
+        * `admin` - Admin
+    VendorBrief:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        status:
+          $ref: '#/components/schemas/StatusD08Enum'
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+      required:
+      - slug
+      - store_name
+    VendorBriefRequest:
+      type: object
+      properties:
+        store_name:
+          type: string
+          minLength: 1
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        status:
+          $ref: '#/components/schemas/StatusD08Enum'
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+      required:
+      - slug
+      - store_name
+    VendorInFood:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        city:
+          type: string
+          title: Kota
+          maxLength: 100
+        is_open:
+          type: boolean
+          title: Toko buka
+      required:
+      - city
+      - slug
+      - store_name
+    VendorInFoodDetail:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        city:
+          type: string
+          title: Kota
+          maxLength: 100
+        is_open:
+          type: boolean
+          title: Toko buka
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Ongkir tetap
+      required:
+      - city
+      - slug
+      - store_name
+    VendorInImage:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - slug
+      - store_name
+    VendorOrder:
+      type: object
+      description: 'Tampilan vendor: data pembeli hanya untuk pesanan makanan (docs/07
+        §6).'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+        order_type:
+          type: string
+        order_status:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status8a2Enum'
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        commission_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        vendor_earning:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        payout_status:
+          $ref: '#/components/schemas/PayoutStatusEnum'
+        cancel_reason:
+          type: string
+          maxLength: 255
+        customer:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        notes:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
+        timeline:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        allowed_transitions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - allowed_transitions
+      - commission_amount
+      - created_at
+      - customer
+      - id
+      - items
+      - notes
+      - order_number
+      - order_status
+      - order_type
+      - subtotal
+      - timeline
+      - vendor_earning
+    VendorOrderInOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vendor:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/Status8a2Enum'
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        cancel_reason:
+          type: string
+          maxLength: 255
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
+        timeline:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        can_confirm_received:
+          type: boolean
+          readOnly: true
+      required:
+      - can_confirm_received
+      - id
+      - items
+      - subtotal
+      - timeline
+      - vendor
+    VendorOrderStatusRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/VendorOrderStatusStatusEnum'
+        reason:
+          type: string
+          default: ''
+          maxLength: 255
+      required:
+      - status
+    VendorOrderStatusStatusEnum:
+      enum:
+      - processing
+      - shipped
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `processing` - processing
+        * `shipped` - shipped
+        * `completed` - completed
+        * `cancelled` - cancelled
+    VendorProfile:
+      type: object
+      properties:
+        store_name:
+          type: string
+          title: Nama toko
+          maxLength: 120
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+          title: Deskripsi
+        phone:
+          type: string
+          maxLength: 20
+        address:
+          type: string
+          title: Alamat toko
+        city:
+          type: string
+          title: Kota
+          maxLength: 100
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        logo_url:
+          type: string
+          nullable: true
+          readOnly: true
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Ongkir tetap
+        is_open:
+          type: boolean
+          title: Toko buka
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusD08Enum'
+          readOnly: true
+        rejection_reason:
+          type: string
+          readOnly: true
+          title: Alasan penolakan
+        commission_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          readOnly: true
+          nullable: true
+          title: Override komisi
+          description: Kosongkan untuk memakai komisi default platform. 0.1000 = 10%.
+        approved_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - address
+      - approved_at
+      - city
+      - commission_rate
+      - created_at
+      - logo_url
+      - phone
+      - rejection_reason
+      - slug
+      - status
+      - store_name
+    VendorProfileRequest:
+      type: object
+      properties:
+        store_name:
+          type: string
+          minLength: 1
+          title: Nama toko
+          maxLength: 120
+        description:
+          type: string
+          title: Deskripsi
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 20
+        address:
+          type: string
+          minLength: 1
+          title: Alamat toko
+        city:
+          type: string
+          minLength: 1
+          title: Kota
+          maxLength: 100
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        logo:
+          type: string
+          format: binary
+          writeOnly: true
+        sells_food:
+          type: boolean
+          title: Menjual makanan
+        sells_images:
+          type: boolean
+          title: Menjual aset gambar
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Ongkir tetap
+        is_open:
+          type: boolean
+          title: Toko buka
+      required:
+      - address
+      - city
+      - phone
+      - store_name
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
